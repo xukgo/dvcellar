@@ -74,7 +74,7 @@ func createGloabalInfo(info LocalServiceDefine) registerGlobalInfo {
 }
 
 func registerPost(url string, gson string, timeout int) (*registerResponse, error) {
-	httpResponse := netUtil.HttpPostJson(url, gson, timeout, true)
+	httpResponse := netUtil.HttpPostJson(url, gson, timeout)
 	if httpResponse.Error != nil {
 		return nil, httpResponse.Error
 	}

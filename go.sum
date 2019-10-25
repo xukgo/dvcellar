@@ -33,6 +33,8 @@ github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UV
 github.com/syndtr/goleveldb v1.0.0/go.mod h1:ZVVdQEZoIme9iO1Ch2Jdy24qqXrMMOU6lpPAyBWyWuQ=
 github.com/xukgo/gsaber v0.0.0-20191022123910-cbbccf9b1c8e h1:vGFhcVhF3dNSFfMAdevF4/9K4PzEKZYIPCYMnNBqOG4=
 github.com/xukgo/gsaber v0.0.0-20191022123910-cbbccf9b1c8e/go.mod h1:w0ESpPWMlwP22Bmw6YIB1wQbD3vt1UdctaHgptJdzkA=
+github.com/xukgo/gsaber v0.0.0-20191025143419-9b9d3a7f98cd h1:N/3QeuAFbqQMXdDqcrqEO+3IV+F7OfVcDc/z5advX8U=
+github.com/xukgo/gsaber v0.0.0-20191025143419-9b9d3a7f98cd/go.mod h1:KSHgTIo9mW3Li40Oi7uZKP7Hi/hmMjJhaEzJCQXGc18=
 golang.org/x/net v0.0.0-20180906233101-161cd47e91fd h1:nTDtHvHSdCn1m6ITfMRqtOd/9+7a3s8RBNOZ3eYZzJA=
 golang.org/x/net v0.0.0-20180906233101-161cd47e91fd/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
 golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=

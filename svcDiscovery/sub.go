@@ -181,7 +181,7 @@ func getService(info subSvcReuqestGloablInfo, url string, timeout int) (*subSvcR
 	requestModel.GlobalInfo = info
 
 	gson, _ := requestModel.toJson()
-	httpResponse := netUtil.HttpPostJson(url, gson, timeout, true)
+	httpResponse := netUtil.HttpPostJson(url, gson, timeout)
 	if httpResponse.Error != nil {
 		return nil, httpResponse.Error
 	}
