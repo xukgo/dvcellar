@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Service>
+	<LocalDefine>
+		<Name>YourSvcName</Name>
+		<NodeId>2701</NodeId>
+		<LocalIP>172.16.0.212</LocalIP>
+		<Version>CoverCC-1.0.0.1</Version>
+		<HttpUrl>http://172.16.0.212:8829</HttpUrl>
+		<WebPort>8829</WebPort>
+		<UpdateInterval>3000</UpdateInterval>
+	</LocalDefine>
+	<SubSvcs>
+		<SubsInterval>5000</SubsInterval>
+		<Service>
+			<Name>CallCenter</Name>
+			<Version></Version>
+		</Service>
+		<!--<Service>
+            <Name>SwitchServer</Name>
+            <Version>SwitchServer-3.1.1.3</Version>
+        </Service>
+        <Service>
+            <Name>PushGateway</Name>
+            <Version>PushGateway-3.0.0.2</Version>
+        </Service>
+        <Service>
+            <Name>DataGateway</Name>
+            <Version>DataGateway-3.1.2.1</Version>
+        </Service>-->
+	</SubSvcs>
+	<ServiceDiscoveryDomain>
+		<IP>172.16.0.212</IP>
+		<Port>7101</Port>
+		<Timeout>2000</Timeout>
+	</ServiceDiscoveryDomain>
+</Service>
