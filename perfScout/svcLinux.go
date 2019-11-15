@@ -29,7 +29,8 @@ func loopUpdateMonitorInfo() {
 
 	for {
 		totalCpuTime := getTotalCpuTime()
-		procCpuTime := getProcCpuTime(pid)
+		procCpuTime,readCpuErr := getProcCpuTime(pid)
+
 		mem := getProcessMem(pid)
 		fdSum := getProcessFdCount(pid)
 		ioInfo := getIOBytes(pid)
@@ -38,8 +39,10 @@ func loopUpdateMonitorInfo() {
 		if !firstRun {
 			singleton.locker.Lock()
 
-			loadrate := float64(cpuCount*100) * float64(procCpuTime-lastProCpuTime) / float64(totalCpuTime-lastTotalCpuTime)
-			singleton.CpuLoadPercent = loadrate
+			if !readCpuErr{
+				loadrate := float64(cpuCount*100) * float64(procCpuTime-lastProCpuTime) / float64(totalCpuTime-lastTotalCpuTime)
+				singleton.CpuLoadPercent = loadrate
+			}
 			singleton.MemUse = mem
 			singleton.FdCount = fdSum
 			singleton.WriteIOSpeed = float64(ioInfo.writeBytes-lastIoInfo.writeBytes) / float64(ioInfo.nanoStamp-lastIoInfo.nanoStamp)
@@ -50,9 +53,10 @@ func loopUpdateMonitorInfo() {
 		}
 		firstRun = false
 
-		lastTotalCpuTime = totalCpuTime
-		lastProCpuTime = procCpuTime
-		lastTotalCpuTime = totalCpuTime
+		if !readCpuErr{
+			lastProCpuTime = procCpuTime
+			lastTotalCpuTime = totalCpuTime
+		}
 
 		time.Sleep(time.Second * 2)
 

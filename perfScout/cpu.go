@@ -38,7 +38,7 @@ func getTotalCpuTime() int64 {
 	return sum
 }
 
-func getProcCpuTime(pid int) int64 {
+func getProcCpuTime(pid int) (int64,error) {
 	fileUrl := "/proc/" + strconv.Itoa(pid) + "/stat"
 	buf, err := ioutil.ReadFile(fileUrl)
 	if err != nil {
@@ -46,6 +46,9 @@ func getProcCpuTime(pid int) int64 {
 	}
 
 	carr := strings.Split(string(buf), " ")
+	if len(carr) < 17{
+		return -1,fmt.Errorf("proc stat file format error")
+	}
 
 	var sum int64 = 0
 	c, err := strconv.ParseInt(carr[13], 10, 64)
@@ -66,5 +69,5 @@ func getProcCpuTime(pid int) int64 {
 	}
 
 	//fmt.Printf("totoal cpu time:%v\r\n",sum)
-	return sum
+	return sum,nil
 }
