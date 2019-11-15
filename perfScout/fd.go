@@ -1,18 +1,20 @@
 package perfScout
 
 import (
+	"fmt"
 	"io/ioutil"
 	"strconv"
 	"strings"
 )
 
 //返回应用使用的fd句柄总数
-func getProcessFdCount(pid int) int {
+func getProcessFdCount(pid int) (int,error) {
 	sum := 0
 	dirUrl := "/proc/" + strconv.Itoa(pid) + "/fd/"
 	rd, err := ioutil.ReadDir(dirUrl)
 	if err != nil {
-		return -1
+		fmt.Println("read /proc/pid/fd/ fail", err)
+		return -1,err
 	}
 
 	for _, fi := range rd {
@@ -23,5 +25,5 @@ func getProcessFdCount(pid int) int {
 		sum++
 	}
 
-	return sum
+	return sum,nil
 }

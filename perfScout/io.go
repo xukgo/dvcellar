@@ -25,7 +25,7 @@ type iorwInfo struct {
 }
 
 //返回应用进行的硬盘io操作的读写总历史字节数,返回
-func getIOBytes(pid int) iorwInfo {
+func getIOBytes(pid int) (iorwInfo, error) {
 	resInfo := iorwInfo{
 		nanoStamp: time.Now().UnixNano(),
 	}
@@ -34,24 +34,24 @@ func getIOBytes(pid int) iorwInfo {
 	buf, err := ioutil.ReadFile(fileUrl)
 	if err != nil {
 		fmt.Println("read /proc/pid/io fail", err)
-		return resInfo
+		return resInfo, err
 	}
 
 	sarr := strings.Split(string(buf), "\n")
-	if len(sarr) == 0 {
-		return resInfo
+	if len(sarr) < 6 {
+		return resInfo, fmt.Errorf("/proc/pid/io file format error")
 	}
 
 	arr := strings.Split(sarr[4], " ")
 	resInfo.readBytes, err = strconv.ParseInt(arr[1], 10, 64)
 	if err != nil {
-		return resInfo
+		return resInfo, err
 	}
 
 	arr = strings.Split(sarr[5], " ")
 	resInfo.writeBytes, err = strconv.ParseInt(arr[1], 10, 64)
 	if err != nil {
-		return resInfo
+		return resInfo, err
 	}
-	return resInfo
+	return resInfo, nil
 }

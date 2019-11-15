@@ -7,15 +7,16 @@ import (
 	"strings"
 )
 
-func getTotalCpuTime() int64 {
+func getTotalCpuTime() (int64,error) {
 	buf, err := ioutil.ReadFile("/proc/stat")
 	if err != nil {
 		fmt.Println("read /proc/stat fail", err)
+		return -1,err
 	}
 
 	sarr := strings.Split(string(buf), "\n")
 	if len(sarr) == 0 {
-		return -1
+		return -1,fmt.Errorf("/proc/stat file format error")
 	}
 
 	carr := strings.Split(sarr[0], " ")
@@ -35,7 +36,7 @@ func getTotalCpuTime() int64 {
 
 	}
 	//fmt.Printf("totoal cpu time:%v\r\n",sum)
-	return sum
+	return sum,nil
 }
 
 func getProcCpuTime(pid int) (int64,error) {
@@ -43,11 +44,12 @@ func getProcCpuTime(pid int) (int64,error) {
 	buf, err := ioutil.ReadFile(fileUrl)
 	if err != nil {
 		fmt.Println("read /proc/pid/stat fail", err)
+		return -1,err
 	}
 
 	carr := strings.Split(string(buf), " ")
 	if len(carr) < 17{
-		return -1,fmt.Errorf("proc stat file format error")
+		return -1,fmt.Errorf("/proc/pid/stat file format error")
 	}
 
 	var sum int64 = 0

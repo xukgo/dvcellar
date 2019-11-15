@@ -28,32 +28,41 @@ func loopUpdateMonitorInfo() {
 	var lastIoInfo iorwInfo
 
 	for {
-		totalCpuTime := getTotalCpuTime()
-		procCpuTime,readCpuErr := getProcCpuTime(pid)
+		totalCpuTime, readTotalCpuErr := getTotalCpuTime()
+		procCpuTime, readCpuErr := getProcCpuTime(pid)
 
-		mem := getProcessMem(pid)
-		fdSum := getProcessFdCount(pid)
-		ioInfo := getIOBytes(pid)
-		ninfo, _ := net.ConnectionsPid("all", (int32(pid)))
+		mem, readMemErr := getProcessMem(pid)
+		fdSum, readFdErr := getProcessFdCount(pid)
+		ioInfo, readIoErr := getIOBytes(pid)
+		ninfo, readNetErr := net.ConnectionsPid("all", (int32(pid)))
 
 		if !firstRun {
 			singleton.locker.Lock()
 
-			if readCpuErr == nil{
+			if readCpuErr == nil {
 				loadrate := float64(cpuCount*100) * float64(procCpuTime-lastProCpuTime) / float64(totalCpuTime-lastTotalCpuTime)
 				singleton.CpuLoadPercent = loadrate
 			}
-			singleton.MemUse = mem
-			singleton.FdCount = fdSum
-			singleton.WriteIOSpeed = float64(ioInfo.writeBytes-lastIoInfo.writeBytes) / float64(ioInfo.nanoStamp-lastIoInfo.nanoStamp)
-			singleton.SocketCount = len(ninfo)
+			if readMemErr == nil {
+				singleton.MemUse = mem
+			}
+			if readFdErr == nil {
+				singleton.FdCount = fdSum
+			}
+			if readIoErr == nil {
+				singleton.WriteIOSpeed = float64(ioInfo.writeBytes-lastIoInfo.writeBytes) / float64(ioInfo.nanoStamp-lastIoInfo.nanoStamp)
+			}
+
+			if readNetErr == nil {
+				singleton.SocketCount = len(ninfo)
+			}
 
 			singleton.locker.Unlock()
 			//fmt.Printf("systemInfo:%v\r\n",singleton.PerfInfo)
 		}
 		firstRun = false
 
-		if readCpuErr == nil{
+		if readCpuErr == nil {
 			lastProCpuTime = procCpuTime
 			lastTotalCpuTime = totalCpuTime
 		}
