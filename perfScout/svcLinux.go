@@ -39,7 +39,7 @@ func loopUpdateMonitorInfo() {
 		if !firstRun {
 			singleton.locker.Lock()
 
-			if !readCpuErr{
+			if readCpuErr == nil{
 				loadrate := float64(cpuCount*100) * float64(procCpuTime-lastProCpuTime) / float64(totalCpuTime-lastTotalCpuTime)
 				singleton.CpuLoadPercent = loadrate
 			}
@@ -53,7 +53,7 @@ func loopUpdateMonitorInfo() {
 		}
 		firstRun = false
 
-		if !readCpuErr{
+		if readCpuErr == nil{
 			lastProCpuTime = procCpuTime
 			lastTotalCpuTime = totalCpuTime
 		}
