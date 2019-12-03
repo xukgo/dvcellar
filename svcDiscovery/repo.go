@@ -39,6 +39,10 @@ func (this *ServieDiscoveryRepo) AddObserver(observer Observer) {
 
 func (this *ServieDiscoveryRepo) StartRegister(getRegisterInfoFunc func() (RegisterSystemInfo, interface{})) {
 	conf := this.sdConf
+	if conf == nil {
+		return
+	}
+
 	this.register = newServiceDiscoveryInfo(conf.SdDomain.IP, conf.SdDomain.Port)
 	go this.register.Start(getRegisterInfoFunc, conf.LocalSvc, conf.SdDomain.Timeout, conf.LocalSvc.UpdateInterval)
 }
@@ -50,6 +54,9 @@ func (this *ServieDiscoveryRepo) StartSubsvc() {
 	var infos []subSvcReuqestGloablInfo
 	for _, item := range conf.SubSvcs.SubServices {
 		infos = append(infos, *newSubSvcReuqestGloablInfo(item.Name, item.Version))
+	}
+	if len(infos) == 0 {
+		return
 	}
 	go this.watcher.Start(infos, conf.SdDomain.Timeout, conf.SubSvcs.SubsInterval)
 }
