@@ -7,11 +7,11 @@ import (
 )
 
 type channelPool struct {
-	// storage for our Conn connections
+	//storage conn connections
 	mu    sync.RWMutex
 	conns chan Conn
 
-	// Conn generator
+	// Conn generator factory define
 	factory ConnFactory
 }
 
@@ -20,23 +20,23 @@ func NewChannelPool(initialCap, maxCap int, factory ConnFactory) (Pool, error) {
 		return nil, errors.New("invalid capacity settings")
 	}
 
-	c := &channelPool{
+	p := &channelPool{
 		conns:   make(chan Conn, maxCap),
 		factory: factory,
 	}
 
-	// Create initial connections, if something goes wrong,
+	// 初始化链接，如果失败，关闭pool 返回错误
 	// just close the pool error out.
 	for i := 0; i < initialCap; i++ {
 		conn, err := factory.Create()
 		if err != nil {
-			c.Close()
+			p.Close()
 			return nil, fmt.Errorf("factory is not able to fill the pool: %s", err.Error())
 		}
-		c.conns <- conn
+		p.conns <- conn
 	}
 
-	return c, nil
+	return p, nil
 }
 
 func (c *channelPool) getConnsAndFactory() (chan Conn, ConnFactory) {
@@ -79,17 +79,15 @@ func (c *channelPool) put(conn Conn) error {
 	defer c.mu.RUnlock()
 
 	if c.conns == nil {
-		// pool is closed, close passed connection
+		// 如果pool关闭了，关闭传过来的连接
 		return conn.Close()
 	}
 
-	// put the resource back into the pool. If the pool is full, this will
-	// block and the default case will be executed.
+	//把连接放回到pool到时候要分情况，如果pool满了，则会阻塞住执行default，把连接关闭关闭
 	select {
 	case c.conns <- conn:
 		return nil
 	default:
-		// pool is full, close passed connection
 		return conn.Close()
 	}
 }

@@ -8,5 +8,5 @@ package connPool
 
 type Conn interface {
 	Close() error
-	SendRecv(buff []byte, timeout int) ([]byte, error)
+	//SendRecv(buff []byte, timeout int) ([]byte, error)
 }

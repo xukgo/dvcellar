@@ -4,8 +4,7 @@ import (
 	"sync"
 )
 
-// PoolConn is a wrapper around *websocket.Conn to modify the the behavior of
-// *websocket.Conn's Close() method.
+// PoolConn是一个对conn到包装类，额外添加了锁和关联的pool
 type PoolConn struct {
 	Conn
 	mu       sync.RWMutex
@@ -13,7 +12,7 @@ type PoolConn struct {
 	unusable bool
 }
 
-// Close() puts the given connects back to the pool instead of closing it.
+//如果有效到连接则放回pool，无效的则关闭掉
 func (p *PoolConn) BackClose() error {
 	p.mu.RLock()
 	defer p.mu.RUnlock()
@@ -27,25 +26,15 @@ func (p *PoolConn) BackClose() error {
 	return p.c.put(p.Conn)
 }
 
-// MarkUnusable() marks the connection not usable any more, to let the pool close it instead of returning it to pool.
+// 标记连接是否还有效否
 func (p *PoolConn) MarkUnusable() {
 	p.mu.Lock()
 	p.unusable = true
 	p.mu.Unlock()
 }
 
-// newConn wraps a standard *websocket.Conn to a poolConn *websocket.Conn.
 func (c *channelPool) wrapConn(conn Conn) *PoolConn {
 	p := &PoolConn{c: c}
 	p.Conn = conn
 	return p
 }
-
-//func RealClose(){
-//	if pc, ok := conn.(*PoolConn); !ok {
-//		t.Errorf("impossible")
-//	} else {
-//		pc.MarkUnusable()
-//	}
-//	conn.Close()
-//}
