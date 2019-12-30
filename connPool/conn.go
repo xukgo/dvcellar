@@ -12,6 +12,9 @@ type PoolConn struct {
 	unusable bool
 }
 
+func (p *PoolConn) GetConn() Conn {
+	return p.Conn
+}
 //如果有效到连接则放回pool，无效的则关闭掉
 func (p *PoolConn) BackClose() error {
 	p.mu.RLock()
