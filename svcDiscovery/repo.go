@@ -34,7 +34,9 @@ func (this *ServieDiscoveryRepo) InitConf(fileUrl string) error {
 }
 
 func (this *ServieDiscoveryRepo) AddObserver(observer Observer) {
-	this.watcher.addObserver(observer)
+	if this.watcher != nil{
+		this.watcher.addObserver(observer)
+	}
 }
 
 func (this *ServieDiscoveryRepo) StartRegister(getRegisterInfoFunc func() (RegisterSystemInfo, interface{})) {
@@ -96,6 +98,9 @@ func (this *ServieDiscoveryRepo) GetSubSvcNames() []string {
 }
 
 func (this *ServieDiscoveryRepo) GetServiceInfos(name string, isRandSort bool) []SvcInfo {
+	if this.watcher == nil{
+		return nil
+	}
 	arr := this.watcher.getArrayByName(name)
 	randomSortSlice(arr)
 	return arr
