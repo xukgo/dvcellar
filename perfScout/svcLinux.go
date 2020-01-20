@@ -3,7 +3,6 @@
 package perfScout
 
 import (
-	"github.com/shirou/gopsutil/net"
 	"os"
 	"runtime"
 	"time"
@@ -34,7 +33,7 @@ func loopUpdateMonitorInfo() {
 		mem, readMemErr := getProcessMem(pid)
 		fdSum, readFdErr := getProcessFdCount(pid)
 		ioInfo, readIoErr := getIOBytes(pid)
-		ninfo, readNetErr := net.ConnectionsPid("all", (int32(pid)))
+		//ninfo, readNetErr := net.ConnectionsPid("all", (int32(pid)))
 
 		if !firstRun {
 			singleton.locker.Lock()
@@ -53,9 +52,10 @@ func loopUpdateMonitorInfo() {
 				singleton.WriteIOSpeed = float64(ioInfo.writeBytes-lastIoInfo.writeBytes) / float64(ioInfo.nanoStamp-lastIoInfo.nanoStamp)
 			}
 
-			if readNetErr == nil {
-				singleton.SocketCount = len(ninfo)
-			}
+			//if readNetErr == nil {
+			//	singleton.SocketCount = len(ninfo)
+			//}
+			singleton.SocketCount = 0
 
 			singleton.locker.Unlock()
 			//fmt.Printf("systemInfo:%v\r\n",singleton.PerfInfo)
