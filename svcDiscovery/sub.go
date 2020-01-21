@@ -200,7 +200,7 @@ func getService(info subSvcReuqestGloablInfo, url string, timeout int) (*subSvcR
 
 func (this *subSvcWatcher) getArrayByName(name string) []SvcInfo {
 	this.rwLocker.RLock()
-	var resArr []SvcInfo
+	var resArr = make([]SvcInfo,0, len(this.svcArray)/2)
 	for _, item := range this.svcArray {
 		if checkSvcInfoMatchNameAndOnline(item, name) {
 			resArr = append(resArr, item)
