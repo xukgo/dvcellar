@@ -2,10 +2,9 @@ package svcDiscovery
 
 import (
 	"fmt"
+	"github.com/xukgo/gsaber/utils/randomUtil"
 	"io/ioutil"
-	"math/rand"
 	"sync"
-	"time"
 )
 
 type ServieDiscoveryRepo struct {
@@ -112,9 +111,8 @@ func randomSortSlice(arr []SvcInfo) {
 		return
 	}
 
-	rand.Seed(time.Now().Unix())
 	for i := len(arr) - 1; i > 0; i-- {
-		num := rand.Intn(i + 1)
+		num:=randomUtil.NewInt32(0,int32(i+1))
 		arr[i], arr[num] = arr[num], arr[i]
 	}
 }
