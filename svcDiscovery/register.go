@@ -48,7 +48,10 @@ func (this *serviceDiscoveryInfo) Start(getRegisterInfoFunc func() (RegisterSyst
 		elapse := int((endTime.UnixNano() - startTime.UnixNano()) / 1000000)
 
 		if err != nil || resp.Result.Code != 0 {
-			time.Sleep(time.Second * 1)
+			//失败至少整体耗时维持100ms，不要太频繁
+			if elapse < 100 {
+				time.Sleep(time.Millisecond * time.Duration(100-elapse))
+			}
 			continue
 		}
 		if elapse < interval {
