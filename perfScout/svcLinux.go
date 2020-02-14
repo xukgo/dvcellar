@@ -48,8 +48,10 @@ func loopUpdateMonitorInfo() {
 			if readFdErr == nil {
 				singleton.FdCount = fdSum
 			}
-			if readIoErr == nil {
-				singleton.WriteIOSpeed = float64(ioInfo.writeBytes-lastIoInfo.writeBytes) / float64(ioInfo.nanoStamp-lastIoInfo.nanoStamp)
+			if readIoErr == nil && ioInfo.nanoStamp != lastIoInfo.nanoStamp{
+				singleton.WriteIOSpeed =
+					float64(ioInfo.writeBytes-lastIoInfo.writeBytes) / float64(ioInfo.nanoStamp-lastIoInfo.nanoStamp)/float64( time.Second)
+				lastIoInfo = ioInfo
 			}
 
 			//if readNetErr == nil {

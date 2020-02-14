@@ -20,11 +20,19 @@ func getProcessMem(pid int) (int, error) {
 		return -1, fmt.Errorf("/proc/pid/status file format error")
 	}
 
-	arr := strings.Split(sarr[21], " ")
-	memStr := arr[len(arr)-2]
-	m, err := strconv.Atoi(memStr)
-	if err != nil {
-		return -1, fmt.Errorf("/proc/pid/status file format error")
+	for idx := range sarr{
+		if strings.Index( sarr[idx],"VmRSS:") < 0{
+			continue
+		}
+
+		arr := strings.Split(sarr[21], " ")
+		memStr := arr[len(arr)-2]
+		m, err := strconv.Atoi(memStr)
+		if err != nil {
+			return -1, fmt.Errorf("/proc/pid/status file format error")
+		}
+		return m, nil
 	}
-	return m, nil
+
+	return 0,nil
 }
