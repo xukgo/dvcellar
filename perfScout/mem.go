@@ -25,7 +25,7 @@ func getProcessMem(pid int) (int, error) {
 			continue
 		}
 
-		arr := strings.Split(sarr[21], " ")
+		arr := strings.Split(sarr[idx], " ")
 		memStr := arr[len(arr)-2]
 		m, err := strconv.Atoi(memStr)
 		if err != nil {
