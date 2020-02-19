@@ -167,7 +167,7 @@ func (this *subSvcWatcher) deleteSvcs(name string) {
 func deleteSvcSliceByName(arr []SvcInfo, name string) []SvcInfo {
 	j := 0
 	for _, val := range arr {
-		if strings.ToLower(val.GlobalInfo.Name) != strings.ToLower(name) {
+		if !strings.EqualFold(val.GlobalInfo.Name, name) {
 			arr[j] = val
 			j++
 		}
@@ -236,10 +236,10 @@ func (this *subSvcWatcher) getArrayByName(name string) []SvcInfo {
 //}
 
 func checkSvcInfoMatchNameAndOnline(info SvcInfo, name string) bool {
-	if strings.ToLower(info.GlobalInfo.State) != "online" {
+	if !strings.EqualFold(info.GlobalInfo.State,"online") {
 		return false
 	}
-	if strings.ToLower(info.GlobalInfo.Name) != strings.ToLower(name) {
+	if !strings.EqualFold(info.GlobalInfo.Name, name) {
 		return false
 	}
 	//if len(version) > 0 && !strings.Contains(item.GlobalInfo.Version, version) {
