@@ -1,0 +1,47 @@
+<SrvDiscover>
+    <!-- 连接超时, 单位秒   -->
+    <Timeout>2</Timeout>
+    <!-- 服务发现服务器地址列表   -->
+    <Endpoints>
+        <Addr>172.16.0.212:2379</Addr>
+        <Addr>172.16.0.214:2379</Addr>
+        <Addr>172.16.0.233:2379</Addr>
+    </Endpoints>
+
+    <Register>
+        <!--服务的TimeToLive, 单位秒, 默认6-->
+         <TTL>6</TTL>
+        <!--注册轮询周期, 单位秒, 默认2-->
+         <Interval>2</Interval>
+        <!--注册的命名空间, 默认voice-->
+         <Namespace>voice</Namespace>
+        <Global>
+            <!-- 注册的服务名称, 必填 -->
+            <Name>CallCenter</Name>
+            <!-- 注册的节点ID, 必填 -->
+            <NodeId>1303</NodeId>
+            <!--  注册版本号, 必填  -->
+            <Version>CallCenter-3.2.1.1</Version>
+            <!-- 服务的IP, 必填, 可以是public, private, localhost或实际的IP地址，：后面跟着分开的ip前缀用于过滤自己需要的ip段，用于多个private网络地址的时候 -->
+            <IP>private:10.188|172.16</IP>
+        </Global>
+        <PortMap>
+            <Port name="http" port="7778" />
+            <Port name="grpc" port="7779" />
+        </PortMap>
+    </Register>
+
+    <!--  服务订阅  -->
+    <Subscribe>
+        <Service>
+            <Name>PushGateway</Name>
+            <!--  版本前缀，非必填， 空则匹配所有版本  -->
+            <Version></Version>
+            <!-- 名字空间, 非必填, 默认为voice -->
+            <Namespace></Namespace>
+        </Service>
+        <Service>
+            <Name>CallCenter</Name>
+        </Service>
+    </Subscribe>
+</SrvDiscover>
