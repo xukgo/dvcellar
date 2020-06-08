@@ -36,10 +36,10 @@ type RegisterProfileInfo struct {
 }
 
 type RegisterInfo struct {
-	Global  RegisterGlobalInfo  `json:"global"`
-	Profile RegisterProfileInfo `json:"profile"`
-	Port    map[string]int      `json:"port"`
-	Private map[string]string   `json:"private"`
+	Global   RegisterGlobalInfo      `json:"global"`
+	Profile  RegisterProfileInfo     `json:"profile"`
+	SvcInfos []RegisterSvcDefineConf `json:"SvcInfo"`
+	Private  map[string]string       `json:"private"`
 }
 
 func (this RegisterInfo) FormatRegisterKey(namespace string) string {
@@ -69,15 +69,16 @@ func (this *RegisterInfo) DeepClone() *RegisterInfo {
 	model := new(RegisterInfo)
 	model.Global = this.Global
 	model.Profile = this.Profile
+	model.SvcInfos = this.SvcInfos
 
-	if this.Port == nil {
-		model.Port = nil
-	} else {
-		model.Port = make(map[string]int)
-		for key, value := range this.Port {
-			model.Port[key] = value
-		}
-	}
+	//if this.SvcInfos == nil {
+	//	model.SvcInfos = nil
+	//} else {
+	//	model.SvcInfos = make([]RegisterSvcDefineConf, 0, len(this.SvcInfos))
+	//	for idx := range this.SvcInfos {
+	//		model.SvcInfos = append(model.SvcInfos, *this.SvcInfos[idx].DeepClone())
+	//	}
+	//}
 
 	if this.Private == nil {
 		model.Private = nil

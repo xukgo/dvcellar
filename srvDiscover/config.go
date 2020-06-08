@@ -24,11 +24,11 @@ type ConfRoot struct {
 }
 
 type RegisterConf struct {
-	Interval  int                `xml:"Interval"`  //注册间隔, 单位秒, 默认值为2
-	TTL       int                `xml:"TTL"`       //注册服务的TimeToLive, 单位秒,默认值为6
-	Namespace string             `xml:"Namespace"` //注册Key的namespace, 默认为voice, /registry/namespace/..
-	Global    RegisterGlobalConf `xml:"Global"`
-	PortMap   []RegisterPortConf `xml:"PortMap>Port"`
+	Interval  int                     `xml:"Interval"`  //注册间隔, 单位秒, 默认值为2
+	TTL       int                     `xml:"TTL"`       //注册服务的TimeToLive, 单位秒,默认值为6
+	Namespace string                  `xml:"Namespace"` //注册Key的namespace, 默认为voice, /registry/namespace/..
+	Global    RegisterGlobalConf      `xml:"Global"`
+	SvcInfos  []RegisterSvcDefineConf `xml:"SvcInfos>Svc"`
 	//PrivateMap []SrvRegisterPrivateConf `xml:"PrivateMap>Private"`
 }
 
@@ -41,9 +41,16 @@ type RegisterGlobalConf struct {
 	IP       string `xml:"-"`
 }
 
-type RegisterPortConf struct {
-	Name string `xml:"name,attr"`
-	Port int    `xml:"port,attr"`
+type RegisterSvcDefineConf struct {
+	Name string `xml:"name,attr" json:"name"`
+	Port int    `xml:"port,attr" json:"port"`
+}
+
+func (this *RegisterSvcDefineConf) DeepClone() *RegisterSvcDefineConf {
+	model := new(RegisterSvcDefineConf)
+	model.Name = this.Name
+	model.Port = this.Port
+	return model
 }
 
 type SubscribeSrvConf struct {
@@ -63,6 +70,10 @@ func (this *ConfRoot) FillWithXml(data []byte) error {
 	}
 
 	//反序列化后的处理
+	if this.Timeout <= 0 {
+		this.Timeout = 2
+	}
+
 	this.RegisterConf.Namespace = strings.TrimSpace(this.RegisterConf.Namespace)
 	if len(this.RegisterConf.Namespace) == 0 {
 		this.RegisterConf.Namespace = defaultRegisterOption.Namespace
@@ -148,15 +159,16 @@ func (this *ConfRoot) GetRegisterModule() (*RegisterInfo, error) {
 	srvInfo.Global.IP = register.Global.IP
 	srvInfo.Global.State = register.Global.State
 
-	if len(register.PortMap) > 0 {
-		portMap := register.PortMap
-		srvInfo.Port = make(map[string]int)
-		for i := range portMap {
-			srvInfo.Port[portMap[i].Name] = portMap[i].Port
-		}
-	} else {
-		srvInfo.Port = nil
-	}
+	srvInfo.SvcInfos = register.SvcInfos
+	//if len(register.SvcInfos) > 0 {
+	//	portMap := register.SvcInfos
+	//	srvInfo.Port = make(map[string]int)
+	//	for i := range portMap {
+	//		srvInfo.Port[portMap[i].Name] = portMap[i].Port
+	//	}
+	//} else {
+	//	srvInfo.Port = nil
+	//}
 
 	return srvInfo, nil
 }

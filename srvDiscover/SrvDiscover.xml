@@ -25,10 +25,10 @@
             <!-- 服务的IP, 必填, 可以是public, private, localhost或实际的IP地址，：后面跟着分开的ip前缀用于过滤自己需要的ip段，用于多个private网络地址的时候 -->
             <IP>private:10.188|172.16</IP>
         </Global>
-        <PortMap>
-            <Port name="http" port="7778" />
-            <Port name="grpc" port="7779" />
-        </PortMap>
+        <SvcInfos>
+            <Svc name="http" port="7778" />
+            <Svc name="grpc" port="7779" />
+        </SvcInfos>
     </Register>
 
     <!--  服务订阅  -->
