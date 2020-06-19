@@ -86,6 +86,11 @@ func (this *Repo) StartSubscribe() error {
 	return err
 }
 
+func (this *Repo) GetLocalRegisterInfo() *RegisterConf {
+	conf := this.config
+	return conf.RegisterConf
+}
+
 func (this *Repo) GetServiceByName(name string) []*RegisterInfo {
 	this.locker.RLock()
 	defer this.locker.RUnlock()
