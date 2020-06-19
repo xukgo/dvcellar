@@ -1,5 +1,5 @@
 /**
- * @Author: zhangyw
+ * @Author: xuk
  * @Description:
  * @File:  Conf
  * @Date: 2020/6/3 9:25
@@ -15,6 +15,10 @@ import (
 	"time"
 )
 
+/*
+go mod edit -replace github.com/coreos/bbolt@v1.3.4=go.etcd.io/bbolt@v1.3.4
+go mod edit -replace google.golang.org/grpc@v1.29.1=google.golang.org/grpc@v1.26.0
+*/
 type ConfRoot struct {
 	XMLName       xml.Name
 	Timeout       int            `xml:"Timeout"`        //etcd连接超时时间,单秒秒
