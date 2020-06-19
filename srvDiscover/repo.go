@@ -91,6 +91,21 @@ func (this *Repo) GetLocalRegisterInfo() *RegisterConf {
 	return conf.RegisterConf
 }
 
+func (this *Repo) GetSubsNames() []string {
+	subsconf := this.config.SubScribeConf
+	if subsconf == nil {
+		return nil
+	}
+	if len(subsconf.Services) == 0 {
+		return nil
+	}
+
+	arr := make([]string, 0, len(subsconf.Services))
+	for idx := range subsconf.Services {
+		arr = append(arr, subsconf.Services[idx].Name)
+	}
+	return arr
+}
 func (this *Repo) GetServiceByName(name string) []*RegisterInfo {
 	this.locker.RLock()
 	defer this.locker.RUnlock()
