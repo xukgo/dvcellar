@@ -33,7 +33,7 @@ func (this *ServieDiscoveryRepo) InitConf(fileUrl string) error {
 }
 
 func (this *ServieDiscoveryRepo) AddObserver(observer Observer) {
-	if this.watcher != nil{
+	if this.watcher != nil {
 		this.watcher.addObserver(observer)
 	}
 }
@@ -97,11 +97,13 @@ func (this *ServieDiscoveryRepo) GetSubSvcNames() []string {
 }
 
 func (this *ServieDiscoveryRepo) GetServiceInfos(name string, isRandSort bool) []SvcInfo {
-	if this.watcher == nil{
+	if this.watcher == nil {
 		return nil
 	}
 	arr := this.watcher.getArrayByName(name)
-	randomSortSlice(arr)
+	if isRandSort {
+		randomSortSlice(arr)
+	}
 	return arr
 }
 
@@ -112,7 +114,7 @@ func randomSortSlice(arr []SvcInfo) {
 	}
 
 	for i := len(arr) - 1; i > 0; i-- {
-		num:=randomUtil.NewInt32(0,int32(i+1))
+		num := randomUtil.NewInt32(0, int32(i+1))
 		arr[i], arr[num] = arr[num], arr[i]
 	}
 }

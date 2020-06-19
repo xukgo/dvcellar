@@ -103,6 +103,16 @@ func (this *Repo) GetServiceByName(name string) []*RegisterInfo {
 	return srvInfos
 }
 
+func (this *Repo) GetRandomServiceArray(svcName string) []*RegisterInfo {
+	infos := this.GetServiceByName(svcName)
+	if len(infos) == 0 {
+		return nil
+	}
+
+	randomSortSlice(infos)
+	return infos
+}
+
 func (this *Repo) GetRandomServiceByName(name string) *RegisterInfo {
 	this.locker.RLock()
 	defer this.locker.RUnlock()
@@ -153,6 +163,18 @@ func (this *Repo) initSubsNodeCache(subSrvInfos []SubBasicInfo) {
 		srvNodeList.SubBasicInfo = *NewSubSrvBasicInfo(subSrvInfos[m].Name, subSrvInfos[m].Version, subSrvInfos[m].Namespace)
 		srvNodeList.NodeInfos = make([]*SrvNodeInfo, 0, 1)
 		this.subsNodeCache[subSrvInfos[m].Name] = srvNodeList
+	}
+}
+
+//随机打乱数组
+func randomSortSlice(arr []*RegisterInfo) {
+	if len(arr) <= 0 || len(arr) == 1 {
+		return
+	}
+
+	for i := len(arr) - 1; i > 0; i-- {
+		num := randomUtil.NewInt32(0, int32(i+1))
+		arr[i], arr[num] = arr[num], arr[i]
 	}
 }
 

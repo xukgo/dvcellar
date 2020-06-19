@@ -26,7 +26,7 @@
             <IP>private:10.188|172.16</IP>
         </Global>
         <SvcInfos>
-            <Svc name="http" port="7778" />
+            <Svc name="restful" port="7778" />
             <Svc name="grpc" port="7779" />
         </SvcInfos>
     </Register>

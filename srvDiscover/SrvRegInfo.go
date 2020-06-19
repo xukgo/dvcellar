@@ -91,6 +91,15 @@ func (this *RegisterInfo) DeepClone() *RegisterInfo {
 	return model
 }
 
+func (this RegisterInfo) GetSvcInfo(name string) *RegisterSvcDefineConf {
+	for idx := range this.SvcInfos {
+		if this.SvcInfos[idx].Name == name {
+			return &this.SvcInfos[idx]
+		}
+	}
+	return nil
+}
+
 //func (this *RegisterInfo) MakeEmpty() {
 //	*this = RegisterInfo{}
 //}
