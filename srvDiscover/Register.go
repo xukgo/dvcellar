@@ -60,7 +60,7 @@ func (this *Repo) KeepaliveLease(lease *clientv3.LeaseGrantResponse, srvInfo *Re
 				fmt.Println(">>>error keepaliveResponse")
 				return
 			}
-			fmt.Println("keepaliveResponse", keepaliveResponse)
+			//fmt.Println("keepaliveResponse", keepaliveResponse)
 			break
 		default:
 			if !regOption.AlwaysUpdate {
@@ -90,7 +90,7 @@ func (this *Repo) clientUpdateLeaseContent(lease *clientv3.LeaseGrantResponse, s
 	value := srvInfo.Serialize()
 	valueStr := string(value)
 
-	fmt.Println("keep", key, valueStr)
+	//fmt.Println("keep", key, valueStr)
 	_, err := this.client.Put(context.TODO(), key, valueStr, clientv3.WithLease(lease.ID))
 	return err
 }

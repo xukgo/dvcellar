@@ -154,7 +154,7 @@ func (this *Repo) updateByEvents(srvNodeList *SubSrvNodeList, events []*clientv3
 	for _, event := range events {
 		switch event.Type {
 		case mvccpb.PUT:
-			fmt.Println("put event ...")
+			//fmt.Println("put event ...")
 			upsertNodeList(event.Kv, srvNodeList)
 			break
 		case mvccpb.DELETE:
