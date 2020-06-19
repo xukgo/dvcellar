@@ -100,6 +100,15 @@ func (this RegisterInfo) GetSvcInfo(name string) *RegisterSvcDefineConf {
 	return nil
 }
 
+func (this RegisterInfo) GetPort(name string, defaultPort int) int {
+	for idx := range this.SvcInfos {
+		if this.SvcInfos[idx].Name == name {
+			return this.SvcInfos[idx].Port
+		}
+	}
+	return defaultPort
+}
+
 //func (this *RegisterInfo) MakeEmpty() {
 //	*this = RegisterInfo{}
 //}
