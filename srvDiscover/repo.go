@@ -11,6 +11,7 @@ import (
 	"fmt"
 	"github.com/coreos/etcd/clientv3"
 	"github.com/xukgo/gsaber/utils/randomUtil"
+	"github.com/xukgo/gsaber/utils/stringUtil"
 	"io/ioutil"
 	"os"
 	"sync"
@@ -112,7 +113,7 @@ func (this *Repo) GetServiceByName(name string) []*RegisterInfo {
 
 	var srvInfos []*RegisterInfo = nil
 	for srvName, srvNodeList := range this.subsNodeCache {
-		if srvName == name {
+		if stringUtil.CompareIgnoreCase(srvName, name) {
 			srvInfos = make([]*RegisterInfo, len(srvNodeList.NodeInfos))
 			for n := range srvNodeList.NodeInfos {
 				srvInfos = append(srvInfos, srvNodeList.NodeInfos[n].RegInfo.DeepClone())
@@ -139,7 +140,7 @@ func (this *Repo) GetRandomServiceByName(name string) *RegisterInfo {
 
 	for srvName, srvNodeList := range this.subsNodeCache {
 		count := len(srvNodeList.NodeInfos)
-		if srvName == name {
+		if stringUtil.CompareIgnoreCase(srvName, name) {
 			if count == 0 {
 				return nil
 			} else if count == 1 {

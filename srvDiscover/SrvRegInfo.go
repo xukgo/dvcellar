@@ -11,6 +11,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	jsoniter "github.com/json-iterator/go"
+	"github.com/xukgo/gsaber/utils/stringUtil"
 	"time"
 )
 
@@ -93,7 +94,7 @@ func (this *RegisterInfo) DeepClone() *RegisterInfo {
 
 func (this RegisterInfo) GetSvcInfo(name string) *RegisterSvcDefineConf {
 	for idx := range this.SvcInfos {
-		if this.SvcInfos[idx].Name == name {
+		if stringUtil.CompareIgnoreCase(this.SvcInfos[idx].Name, name) {
 			return &this.SvcInfos[idx]
 		}
 	}
@@ -102,7 +103,7 @@ func (this RegisterInfo) GetSvcInfo(name string) *RegisterSvcDefineConf {
 
 func (this RegisterInfo) GetPort(name string, defaultPort int) int {
 	for idx := range this.SvcInfos {
-		if this.SvcInfos[idx].Name == name {
+		if stringUtil.CompareIgnoreCase(this.SvcInfos[idx].Name, name) {
 			return this.SvcInfos[idx].Port
 		}
 	}

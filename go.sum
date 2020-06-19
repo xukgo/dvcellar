@@ -72,6 +72,8 @@ github.com/xukgo/gsaber v0.0.0-20200207071232-6d044f23e55e h1:DzOB1XBu2AszFRW3uk
 github.com/xukgo/gsaber v0.0.0-20200207071232-6d044f23e55e/go.mod h1:N8bi40qNeezICdvJrrqsn1Co0YnLE1GN1qrm7ISzoXw=
 github.com/xukgo/gsaber v0.0.0-20200604080621-4de5abc3475c h1:g8B38bDXfu0MM/MoO5I+9PBM8Us8RtrFxQx6jh28aM4=
 github.com/xukgo/gsaber v0.0.0-20200604080621-4de5abc3475c/go.mod h1:D4MpNmRQnkwtlbTnWf+TfGOSE1v+lbF+oiCrcR+/KvQ=
+github.com/xukgo/gsaber v0.0.0-20200619082911-ae1844cd45e2 h1:rS1cOWquYNf375oju/Bb2zYPyoOMLQUVX8eLpwodlwE=
+github.com/xukgo/gsaber v0.0.0-20200619082911-ae1844cd45e2/go.mod h1:D4MpNmRQnkwtlbTnWf+TfGOSE1v+lbF+oiCrcR+/KvQ=
 go.uber.org/atomic v1.6.0 h1:Ezj3JGmsOnG1MoRWQkPBsKLe9DwWD9QeXzTRzzldNVk=
 go.uber.org/atomic v1.6.0/go.mod h1:sABNBOSYdrvTF6hTgEIbc7YasKWGhgEQZyfxyTvoXHQ=
 go.uber.org/multierr v1.5.0 h1:KCa4XfM8CWFCpxXRGok+Q0SS/0XBhMDbHHGABQLvD2A=
