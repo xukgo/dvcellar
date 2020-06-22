@@ -114,7 +114,7 @@ func (this *Repo) GetServiceByName(name string) []*RegisterInfo {
 	var srvInfos []*RegisterInfo = nil
 	for srvName, srvNodeList := range this.subsNodeCache {
 		if stringUtil.CompareIgnoreCase(srvName, name) {
-			srvInfos = make([]*RegisterInfo, len(srvNodeList.NodeInfos))
+			srvInfos = make([]*RegisterInfo, 0, len(srvNodeList.NodeInfos))
 			for n := range srvNodeList.NodeInfos {
 				srvInfos = append(srvInfos, srvNodeList.NodeInfos[n].RegInfo.DeepClone())
 			}
