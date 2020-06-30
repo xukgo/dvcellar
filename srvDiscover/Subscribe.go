@@ -161,13 +161,13 @@ func (this *Repo) updateByEvents(srvNodeList *SubSrvNodeList, events []*clientv3
 			//fmt.Println("delete event ...")
 			key := string(event.Kv.Key)
 			modRevision := event.Kv.ModRevision
-			removeNode(srvNodeList.NodeInfos, key, modRevision)
+			srvNodeList.NodeInfos = removeNode(srvNodeList.NodeInfos, key, modRevision)
 			break
 		}
 	}
 }
 
-func removeNode(infos []*SrvNodeInfo, key string, modRevision int64) {
+func removeNode(infos []*SrvNodeInfo, key string, modRevision int64) []*SrvNodeInfo {
 	m := 0
 	for idx := range infos {
 		s := infos[idx]
@@ -176,7 +176,7 @@ func removeNode(infos []*SrvNodeInfo, key string, modRevision int64) {
 			m++
 		}
 	}
-	infos = infos[:m]
+	return infos[:m]
 }
 
 func upsertNodeList(kv *mvccpb.KeyValue, srvNodeList *SubSrvNodeList) {
