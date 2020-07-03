@@ -133,7 +133,7 @@ func (this *ConfRoot) GetRegisterOptionFuncs() []RegisterOptionFunc {
 	registerOp = append(registerOp, WithTTL(int64(register.TTL)))
 	registerOp = append(registerOp, WithRegisterNamespace(register.Namespace))
 	registerOp = append(registerOp, WithRegisterInterval(time.Duration(register.Interval)*time.Second))
-	registerOp = append(registerOp, WithRegisterInterval(time.Duration(this.Timeout)*time.Second))
+	registerOp = append(registerOp, WithRegisterConnTimeout(time.Duration(this.Timeout)*time.Second))
 	return registerOp
 }
 
