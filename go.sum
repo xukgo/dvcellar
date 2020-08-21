@@ -164,8 +164,8 @@ github.com/valyala/fastrand v1.0.0 h1:LUKT9aKer2dVQNUi3waewTbKV+7H17kvWFNKs2Obdk
 github.com/valyala/fastrand v1.0.0/go.mod h1:HWqCzkrkg6QXT8V2EXWvXCoow7vLwOFN002oeRzjapQ=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2 h1:eY9dn8+vbi4tKz5Qo6v2eYzo7kUS51QINcR5jNpbZS8=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
-github.com/xukgo/gsaber v0.0.0-20200619082911-ae1844cd45e2 h1:rS1cOWquYNf375oju/Bb2zYPyoOMLQUVX8eLpwodlwE=
-github.com/xukgo/gsaber v0.0.0-20200619082911-ae1844cd45e2/go.mod h1:D4MpNmRQnkwtlbTnWf+TfGOSE1v+lbF+oiCrcR+/KvQ=
+github.com/xukgo/gsaber v0.0.0-20200821064145-3a3454b5a216 h1:WssGzh+LZ3kZUqD/qbusQJYsB8u70JvXElw9icO0HZQ=
+github.com/xukgo/gsaber v0.0.0-20200821064145-3a3454b5a216/go.mod h1:D4MpNmRQnkwtlbTnWf+TfGOSE1v+lbF+oiCrcR+/KvQ=
 go.etcd.io/bbolt v1.3.4 h1:hi1bXHMVrlQh6WwxAy+qZCV/SYIlqo+Ushwdpa4tAKg=
 go.etcd.io/bbolt v1.3.4/go.mod h1:G5EMThwa9y8QZGBClrRx5EY+Yw9kAhnjy3bSjsnlVTQ=
 go.etcd.io/bbolt v1.3.5 h1:XAzx9gjCb0Rxj7EoqcClPD1d5ZBxZJk0jbuoPHenBt0=

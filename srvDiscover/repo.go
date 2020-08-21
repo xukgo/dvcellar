@@ -26,6 +26,10 @@ type Repo struct {
 	client *clientv3.Client //etcd客户端
 
 	subsNodeCache map[string]*SubSrvNodeList
+
+	subLicResultInfo *SubLicResultInfo
+	licLocker        sync.RWMutex
+	licPrivkey       string
 }
 
 func (this *Repo) InitFromPath(path string) error {

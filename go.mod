@@ -22,7 +22,7 @@ require (
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20200427203606-3cfed13b9966 // indirect
 	github.com/ugorji/go v1.1.7 // indirect
 	github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2 // indirect
-	github.com/xukgo/gsaber v0.0.0-20200619082911-ae1844cd45e2
+	github.com/xukgo/gsaber v0.0.0-20200821064145-3a3454b5a216
 	go.etcd.io/bbolt v1.3.5 // indirect
 	golang.org/x/crypto v0.0.0-20190510104115-cbcb75029529 // indirect
 	golang.org/x/net v0.0.0-20191002035440-2ec189313ef0
