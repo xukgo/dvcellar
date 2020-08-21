@@ -104,8 +104,15 @@ func (this *Repo) StartSubLicResult(privKey string, watchFunc func(*LicResultInf
 		}
 		this.getLicResult()
 
+		if this.licWatchFunc != nil {
+			this.licWatchFunc(this.GetLicResultInfo())
+		}
+
 		for watchResponse := range watchChan {
 			this.updateLicResultByEvents(watchResponse.Events)
+			if this.licWatchFunc != nil {
+				this.licWatchFunc(this.GetLicResultInfo())
+			}
 		}
 	}
 }
@@ -124,10 +131,6 @@ func (this *Repo) getLicResult() error {
 	for _, kv := range getResponse.Kvs {
 		this.upsertLicResult(kv)
 	}
-
-	if this.licWatchFunc != nil {
-		this.licWatchFunc(this.GetLicResultInfo())
-	}
 	return nil
 }
 
@@ -144,9 +147,6 @@ func (this *Repo) updateLicResultByEvents(events []*clientv3.Event) {
 			this.removeLicResult(event.Kv)
 			break
 		}
-	}
-	if this.licWatchFunc != nil {
-		this.licWatchFunc(this.GetLicResultInfo())
 	}
 }
 
@@ -223,13 +223,14 @@ func parseLicResult(data []byte, privKey string) (*LicResultInfo, error) {
 
 	//有效的还要校验下时间戳
 	//15分钟没有更新，则认定许可有问题
-	secSub := time.Now().Sub(time.Unix(model.Timestamp, 0)).Seconds()
+	dtNow := time.Now()
+	secSub := dtNow.Sub(time.Unix(model.Timestamp, 0)).Seconds()
 	if secSub > 15*60 {
 		model.Result.Code = 3001
 		model.Result.Description = "update timestamp expired"
 	}
 
-	secSub = time.Now().Sub(time.Unix(model.ExpireTimestamp, 0)).Seconds()
+	secSub = dtNow.Sub(time.Unix(model.ExpireTimestamp, 0)).Seconds()
 	if secSub > 15*60 {
 		model.Result.Code = 3002
 		model.Result.Description = "lic timestamp expired"
