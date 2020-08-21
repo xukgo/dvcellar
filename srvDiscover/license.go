@@ -205,5 +205,27 @@ func parseLicResult(data []byte, privKey string) (*LicResultInfo, error) {
 		log.Println("sub value licResult DecryptJson  error:", err.Error())
 		return nil, err
 	}
+
+	if model.Result == nil {
+		log.Println("sub value licResult unmarshal json result  error")
+		return model, nil
+	}
+	if model.Result.Code != 0 {
+		return model, nil
+	}
+
+	//有效的还要校验下时间戳
+	//15分钟没有更新，则认定许可有问题
+	secSub := time.Now().Sub(time.Unix(model.Timestamp, 0)).Seconds()
+	if secSub > 15*60 {
+		model.Result.Code = 3001
+		model.Result.Description = "update timestamp expired"
+	}
+
+	secSub = time.Now().Sub(time.Unix(model.ExpireTimestamp, 0)).Seconds()
+	if secSub > 15*60 {
+		model.Result.Code = 3002
+		model.Result.Description = "lic timestamp expired"
+	}
 	return model, nil
 }
