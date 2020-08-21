@@ -30,6 +30,7 @@ type Repo struct {
 	subLicResultInfo *SubLicResultInfo
 	licLocker        sync.RWMutex
 	licPrivkey       string
+	licWatchFunc     func(*LicResultInfo)
 }
 
 func (this *Repo) InitFromPath(path string) error {

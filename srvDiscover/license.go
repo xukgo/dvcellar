@@ -87,12 +87,13 @@ func (this *Repo) GetLicResultInfo() *LicResultInfo {
 	return this.subLicResultInfo.Info.Clone()
 }
 
-func (this *Repo) StartSubLicResult(privKey string) error {
+func (this *Repo) StartSubLicResult(privKey string, watchFunc func(*LicResultInfo)) error {
 	if len(privKey) == 0 {
 		return fmt.Errorf("privKey is invalid")
 	}
 
 	this.licPrivkey = privKey
+	this.licWatchFunc = watchFunc
 
 	prefix := LIC_RESULT_KEY
 	for {
@@ -124,6 +125,9 @@ func (this *Repo) getLicResult() error {
 		this.upsertLicResult(kv)
 	}
 
+	if this.licWatchFunc != nil {
+		this.licWatchFunc(this.GetLicResultInfo())
+	}
 	return nil
 }
 
@@ -140,6 +144,9 @@ func (this *Repo) updateLicResultByEvents(events []*clientv3.Event) {
 			this.removeLicResult(event.Kv)
 			break
 		}
+	}
+	if this.licWatchFunc != nil {
+		this.licWatchFunc(this.GetLicResultInfo())
 	}
 }
 
