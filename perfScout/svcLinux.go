@@ -27,12 +27,12 @@ func loopUpdateMonitorInfo() {
 	var lastIoInfo iorwInfo
 
 	for {
-		totalCpuTime, readTotalCpuErr := getTotalCpuTime()
-		procCpuTime, readCpuErr := getProcCpuTime(pid)
+		totalCpuTime, readTotalCpuErr := GetTotalCpuTime()
+		procCpuTime, readCpuErr := GetProcCpuTime(pid)
 
-		mem, readMemErr := getProcessMem(pid)
-		fdSum, readFdErr := getProcessFdCount(pid)
-		ioInfo, readIoErr := getIOBytes(pid)
+		mem, readMemErr := GetProcessMem(pid)
+		fdSum, readFdErr := GetProcessFdCount(pid)
+		ioInfo, readIoErr := GetIOBytes(pid)
 		//ninfo, readNetErr := net.ConnectionsPid("all", (int32(pid)))
 
 		if !firstRun {
@@ -48,9 +48,9 @@ func loopUpdateMonitorInfo() {
 			if readFdErr == nil {
 				singleton.FdCount = fdSum
 			}
-			if readIoErr == nil && ioInfo.nanoStamp != lastIoInfo.nanoStamp{
+			if readIoErr == nil && ioInfo.nanoStamp != lastIoInfo.nanoStamp {
 				singleton.WriteIOSpeed =
-					float64(ioInfo.writeBytes-lastIoInfo.writeBytes) / float64(ioInfo.nanoStamp-lastIoInfo.nanoStamp)/float64( time.Second)
+					float64(ioInfo.writeBytes-lastIoInfo.writeBytes) / float64(ioInfo.nanoStamp-lastIoInfo.nanoStamp) / float64(time.Second)
 				lastIoInfo = ioInfo
 			}
 

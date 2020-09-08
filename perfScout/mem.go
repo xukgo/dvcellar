@@ -8,7 +8,7 @@ import (
 )
 
 //返回应用使用的物理内存大小，单位kb
-func getProcessMem(pid int) (int, error) {
+func GetProcessMem(pid int) (int, error) {
 	fileUrl := "/proc/" + strconv.Itoa(pid) + "/status"
 	buf, err := ioutil.ReadFile(fileUrl)
 	if err != nil {
@@ -20,8 +20,8 @@ func getProcessMem(pid int) (int, error) {
 		return -1, fmt.Errorf("/proc/pid/status file format error")
 	}
 
-	for idx := range sarr{
-		if strings.Index( sarr[idx],"VmRSS:") < 0{
+	for idx := range sarr {
+		if strings.Index(sarr[idx], "VmRSS:") < 0 {
 			continue
 		}
 
@@ -34,5 +34,5 @@ func getProcessMem(pid int) (int, error) {
 		return m, nil
 	}
 
-	return 0,nil
+	return 0, nil
 }

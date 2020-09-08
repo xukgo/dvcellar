@@ -25,7 +25,7 @@ type iorwInfo struct {
 }
 
 //返回应用进行的硬盘io操作的读写总历史字节数,返回
-func getIOBytes(pid int) (iorwInfo, error) {
+func GetIOBytes(pid int) (iorwInfo, error) {
 	resInfo := iorwInfo{
 		nanoStamp: time.Now().UnixNano(),
 	}
