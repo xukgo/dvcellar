@@ -14,7 +14,7 @@ func Info() *MachineUniqueInfo {
 	id, err := machineid.ID()
 	if err != nil {
 		fmt.Println("获取机器唯一码失败：", err)
-		return nil
+		id = ""
 	}
 	info.MachineID = id
 
