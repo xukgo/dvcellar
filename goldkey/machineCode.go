@@ -13,7 +13,7 @@ func Info() *MachineUniqueInfo {
 	info := new(MachineUniqueInfo)
 	id, err := machineid.ID()
 	if err != nil {
-		fmt.Println("获取机器唯一码失败：", err)
+		//fmt.Println("获取机器唯一码失败：", err)
 		id = ""
 	}
 	info.MachineID = id
