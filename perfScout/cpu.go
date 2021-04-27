@@ -2,13 +2,13 @@ package perfScout
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 )
 
 func GetTotalCpuTime() (int64, error) {
-	buf, err := ioutil.ReadFile("/proc/stat")
+	buf, err := os.ReadFile("/proc/stat")
 	if err != nil {
 		fmt.Println("read /proc/stat fail", err)
 		return -1, err
@@ -41,7 +41,7 @@ func GetTotalCpuTime() (int64, error) {
 
 func GetProcCpuTime(pid int) (int64, error) {
 	fileUrl := "/proc/" + strconv.Itoa(pid) + "/stat"
-	buf, err := ioutil.ReadFile(fileUrl)
+	buf, err := os.ReadFile(fileUrl)
 	if err != nil {
 		fmt.Println("read /proc/pid/stat fail", err)
 		return -1, err

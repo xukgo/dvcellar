@@ -2,7 +2,7 @@ package perfScout
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -31,7 +31,7 @@ func GetIOBytes(pid int) (iorwInfo, error) {
 	}
 
 	fileUrl := "/proc/" + strconv.Itoa(pid) + "/io"
-	buf, err := ioutil.ReadFile(fileUrl)
+	buf, err := os.ReadFile(fileUrl)
 	if err != nil {
 		fmt.Println("read /proc/pid/io fail", err)
 		return resInfo, err

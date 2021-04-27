@@ -2,7 +2,7 @@ package perfScout
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -11,7 +11,7 @@ import (
 func GetProcessFdCount(pid int) (int, error) {
 	sum := 0
 	dirUrl := "/proc/" + strconv.Itoa(pid) + "/fd/"
-	rd, err := ioutil.ReadDir(dirUrl)
+	rd, err := os.ReadDir(dirUrl)
 	if err != nil {
 		fmt.Println("read /proc/pid/fd/ fail", err)
 		return -1, err

@@ -2,7 +2,7 @@ package goldkey
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 )
 
@@ -23,7 +23,7 @@ func GetDiskDevName(mountDir string) string {
 	return selectDevName
 }
 func GetDiskDevMountDirs() []MountDirInfo {
-	content, err := ioutil.ReadFile("/etc/mtab")
+	content, err := os.ReadFile("/etc/mtab")
 	if err != nil {
 		fmt.Println("read file error:", err.Error())
 		return nil

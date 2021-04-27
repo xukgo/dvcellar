@@ -2,7 +2,7 @@ package perfScout
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -10,7 +10,7 @@ import (
 //返回应用使用的物理内存大小，单位kb
 func GetProcessMem(pid int) (int, error) {
 	fileUrl := "/proc/" + strconv.Itoa(pid) + "/status"
-	buf, err := ioutil.ReadFile(fileUrl)
+	buf, err := os.ReadFile(fileUrl)
 	if err != nil {
 		fmt.Println("read /proc/pid/status fail", err)
 	}

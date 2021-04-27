@@ -3,7 +3,7 @@ package svcDiscovery
 import (
 	"fmt"
 	"github.com/xukgo/gsaber/utils/randomUtil"
-	"io/ioutil"
+	"os"
 	"sync"
 )
 
@@ -15,7 +15,7 @@ type ServieDiscoveryRepo struct {
 }
 
 func (this *ServieDiscoveryRepo) InitConf(fileUrl string) error {
-	xmlContent, err := ioutil.ReadFile(fileUrl)
+	xmlContent, err := os.ReadFile(fileUrl)
 	if err != nil {
 		errMsg := fmt.Sprintf("ReadFile %s error", fileUrl)
 		fmt.Println("ServieDiscoveryRepo InitConf" + errMsg)
