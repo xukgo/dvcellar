@@ -12,7 +12,6 @@ require (
 	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/tklauser/go-sysconf v0.3.5 // indirect
 	github.com/xukgo/gsaber v0.0.0-20210427143129-8bf50324d5e1
-	golang.org/x/net v0.0.0-20191002035440-2ec189313ef0
-	golang.org/x/sys v0.0.0-20210426230700-d19ff857e887 // indirect
+	golang.org/x/net v0.7.0
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
